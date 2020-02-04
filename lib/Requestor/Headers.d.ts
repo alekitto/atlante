@@ -2,6 +2,11 @@ import Accept from "./Header/Accept";
 
 declare class Headers {
     /**
+     * Constructor.
+     */
+    constructor(headers?: Record<string, string|string[]> | Headers);
+
+    /**
      * Sets an header.
      */
     set(name: 'Accept', value: string | Accept): Headers;
