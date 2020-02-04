@@ -21,6 +21,7 @@
     "@jymfony/autoloader": "^0.1.0-alpha.18",
     "@jymfony/debug": "^0.1.0-alpha.18",
     "@jymfony/testing": "^0.1.0-alpha.18",
+    "@jymfony/var-dumper": "^0.1.0-alpha.18",
     "chai": "^4.2.0",
     "mocha": "^6.2.0",
     "node-localstorage": "^1.3.1",

@@ -18,15 +18,15 @@ describe('[Api] ContextualClient', function () {
 
         this._requestor = this._prophet.prophesize(RequestorInterface);
         this._tokenStorage = this._prophet.prophesize(StorageInterface);
-        this._userTokenStorage = this._prophet.prophesize(StorageInterface);
         this._client = new Client(
             this._requestor.reveal(),
             this._tokenStorage.reveal(),
             {
+                base_url: 'http://example.org',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
             }
-        ).withContext(this._userTokenStorage.reveal());
+        )
     });
 
     afterEach(() => {
@@ -40,13 +40,13 @@ describe('[Api] ContextualClient', function () {
 
         const response = { data: {}, status: 200, statusText: 'OK' };
 
-        this._userTokenStorage.getItem('access_token')
+        this._tokenStorage.getItem('access_token')
             .shouldBeCalled()
             .willReturn(clientToken)
         ;
 
         this._requestor
-            .request('GET', '/', {
+            .request('GET', 'http://example.org/', {
                 Authorization: 'Bearer TEST TOKEN',
                 Accept: 'application/json',
             }, null)
@@ -80,14 +80,14 @@ describe('[Api] ContextualClient', function () {
             }, status: 200, statusText: 'OK'
         };
 
-        this._userTokenStorage.getItem('access_token').willReturn(clientToken);
-        this._userTokenStorage.getItem('refresh_token').willReturn(refreshToken);
+        this._tokenStorage.getItem('access_token').willReturn(clientToken);
+        this._tokenStorage.getItem('refresh_token').willReturn(refreshToken);
 
-        this._userTokenStorage.save(clientToken).shouldBeCalled();
-        this._userTokenStorage.save(refreshToken).shouldBeCalled();
+        this._tokenStorage.save(clientToken).shouldBeCalled();
+        this._tokenStorage.save(refreshToken).shouldBeCalled();
 
         this._requestor
-            .request('POST', '/token', {}, {
+            .request('POST', 'http://example.org/token', {}, {
                 grant_type: 'refresh_token',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
@@ -98,7 +98,7 @@ describe('[Api] ContextualClient', function () {
         ;
 
         this._requestor
-            .request('GET', '/', {
+            .request('GET', 'http://example.org/', {
                 Authorization: 'Bearer TEST TOKEN',
                 Accept: 'application/json',
             }, null)
@@ -120,11 +120,11 @@ describe('[Api] ContextualClient', function () {
         refreshToken.isHit().willReturn(true);
         refreshToken.set('REFRESH TOKEN').willReturn();
 
-        this._userTokenStorage.getItem('access_token').willReturn(clientToken);
-        this._userTokenStorage.getItem('refresh_token').willReturn(refreshToken);
+        this._tokenStorage.getItem('access_token').willReturn(clientToken);
+        this._tokenStorage.getItem('refresh_token').willReturn(refreshToken);
 
-        this._userTokenStorage.save(clientToken).shouldBeCalled();
-        this._userTokenStorage.save(refreshToken).shouldBeCalled();
+        this._tokenStorage.save(clientToken).shouldBeCalled();
+        this._tokenStorage.save(refreshToken).shouldBeCalled();
 
         const tokenResponse = {
             data: {
@@ -135,7 +135,7 @@ describe('[Api] ContextualClient', function () {
         };
 
         this._requestor
-            .request('POST', '/token', {}, {
+            .request('POST', 'http://example.org/token', {}, {
                 grant_type: 'password',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
@@ -160,25 +160,25 @@ describe('[Api] ContextualClient', function () {
         refreshToken.set('REFRESH TOKEN').willReturn();
         refreshToken.get().willReturn('OLD REFRESH TOKEN');
 
-        this._userTokenStorage.getItem('access_token').will(async () => {
+        this._tokenStorage.getItem('access_token').will(async () => {
             await __jymfony.sleep(50);
 
             return clientToken.reveal();
         });
-        this._userTokenStorage.getItem('refresh_token').will(async () => {
+        this._tokenStorage.getItem('refresh_token').will(async () => {
             await __jymfony.sleep(50);
 
             return refreshToken.reveal();
         });
 
-        this._userTokenStorage.save(clientToken)
+        this._tokenStorage.save(clientToken)
             .shouldBeCalledTimes(1)
             .will(async function () {
                 clientToken.isHit().willReturn(true);
                 clientToken.get().willReturn('TEST TOKEN');
             });
 
-        this._userTokenStorage.save(refreshToken)
+        this._tokenStorage.save(refreshToken)
             .shouldBeCalledTimes(1)
             .will(async () => { await __jymfony.sleep(20); });
 
@@ -190,15 +190,15 @@ describe('[Api] ContextualClient', function () {
             }, status: 200, statusText: 'OK'
         };
 
-        this._requestor.request('GET', '/', Argument.any(), Argument.any())
+        this._requestor.request('GET', 'http://example.org/', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('POST', '/resources', Argument.any(), Argument.any())
+        this._requestor.request('POST', 'http://example.org/resources', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('PATCH', '/res1', Argument.any(), Argument.any())
+        this._requestor.request('PATCH', 'http://example.org/res1', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
 
         this._requestor
-            .request('POST', '/token', {}, {
+            .request('POST', 'http://example.org/token', {}, {
                 grant_type: 'refresh_token',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',

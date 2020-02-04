@@ -1,13 +1,16 @@
+import Accept from "./Header/Accept";
+
 declare class Headers {
     /**
      * Sets an header.
      */
-    set(name: string, value: string | string[]): Headers;
+    set(name: 'Accept', value: string | Accept): Headers;
+    set(name: string, value: string | Accept | string[]): Headers;
 
     /**
      * Gets an header by name.
      */
-    get(name: string): string | string[] | undefined;
+    get(name: string): string | Accept | string[] | undefined;
 
     /**
      * Checks whether an header is present.
@@ -22,7 +25,8 @@ declare class Headers {
     /**
      * Adds an header.
      */
-    add(name: string, value: string | string[]): Headers;
+    add(name: 'Accept', value: string | Accept): Headers;
+    add(name: string, value: string | Accept | string[]): Headers;
 }
 
 export default Headers;

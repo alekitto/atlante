@@ -18,7 +18,22 @@ Fazland = {
         /**
          * @namespace
          */
-        Requestor: {},
+        Http: {},
+
+        /**
+         * @namespace
+         */
+        Requestor: {
+            /**
+             * @namespace
+             */
+            Decorator: {},
+
+            /**
+             * @namespace
+             */
+            Header: {},
+        },
 
         /**
          * @namespace

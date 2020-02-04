@@ -23,17 +23,26 @@ describe('[Api] Client', function () {
         this._requestor = this._prophet.prophesize(RequestorInterface);
         this._tokenStorage = this._prophet.prophesize(StorageInterface);
         this._client = new Client(this._requestor.reveal(), this._tokenStorage.reveal(), {
+            base_url: 'http://example.org',
             client_id: 'foo_id',
             client_secret: 'foo_secret',
             version: '20181015',
         });
+
+        const userToken = this._prophet.prophesize(ItemInterface);
+        userToken.isHit().willReturn(false);
+
+        this._tokenStorage.getItem('access_token').willReturn(userToken);
+        this._tokenStorage.getItem('refresh_token').willReturn(userToken);
     });
 
     afterEach(() => {
-        this._prophet.checkPredictions();
+        if (this.currentTest && this.currentTest.state === 'passed') {
+            this._prophet.checkPredictions();
+        }
     });
 
-    it('should use client to make request', async () => {
+    it('should use client token to make request', async () => {
         const clientToken = this._prophet.prophesize(ItemInterface);
         clientToken.isHit().willReturn(true);
         clientToken.get().willReturn('TEST TOKEN');
@@ -45,8 +54,10 @@ describe('[Api] Client', function () {
             .willReturn(clientToken)
         ;
 
+        this._requestor.request(Argument.cetera()).will((...args) => dd(args));
+
         this._requestor
-            .request('GET', '/', {
+            .request('GET', 'http://example.org/', {
                 Authorization: 'Bearer TEST TOKEN',
                 Accept: 'application/json; version=20181015',
             }, null)
@@ -74,7 +85,7 @@ describe('[Api] Client', function () {
         this._tokenStorage.save(clientToken).shouldBeCalled();
 
         this._requestor
-            .request('POST', '/token', {}, {
+            .request('POST', 'http://example.org/token', {}, {
                 grant_type: 'client_credentials',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
@@ -86,7 +97,7 @@ describe('[Api] Client', function () {
             })
         ;
 
-        this._requestor.request('GET', '/', Argument.cetera())
+        this._requestor.request('GET', 'http://example.org/', Argument.cetera())
             .willReturn(response)
         ;
 
@@ -101,7 +112,7 @@ describe('[Api] Client', function () {
         const response = { data: {}, status: 404, statusText: 'Not Found' };
 
         this._tokenStorage.getItem('fazland_atlante_client_token').willReturn(clientToken);
-        this._requestor.request('GET', '/', Argument.cetera()).willReturn(response);
+        this._requestor.request('GET', 'http://example.org/', Argument.cetera()).willReturn(response);
 
         let caughtErr;
         try {
@@ -122,7 +133,7 @@ describe('[Api] Client', function () {
         const response = { data: {}, status: 500, statusText: 'Internal Server Error' };
 
         this._tokenStorage.getItem('fazland_atlante_client_token').willReturn(clientToken);
-        this._requestor.request('GET', '/', Argument.cetera()).willReturn(response);
+        this._requestor.request('GET', 'http://example.org/', Argument.cetera()).willReturn(response);
 
         let caughtErr;
         try {
@@ -143,7 +154,7 @@ describe('[Api] Client', function () {
         const response = { data: {}, status: 404, statusText: 'Not Found' };
 
         this._tokenStorage.getItem('fazland_atlante_client_token').willReturn(clientToken);
-        this._requestor.request('POST', '/token', Argument.cetera()).willReturn(response);
+        this._requestor.request('POST', 'http://example.org/token', Argument.cetera()).willReturn(response);
 
         let caughtErr;
         try {
@@ -153,14 +164,6 @@ describe('[Api] Client', function () {
         }
 
         expect(caughtErr).to.be.instanceOf(NoTokenAvailableException);
-    });
-
-    it('should make a contextual client', () => {
-        const tokenStorage = this._prophet.prophesize(StorageInterface);
-
-        const ctxClient = this._client.withContext(tokenStorage.reveal());
-        expect(ctxClient).to.be.instanceOf(Client);
-        expect(ctxClient.authenticate).not.to.be.undefined;
     });
 
     it ('requests after token expiration should refresh the token', async () => {
@@ -189,15 +192,15 @@ describe('[Api] Client', function () {
             }, status: 200, statusText: 'OK'
         };
 
-        this._requestor.request('GET', '/', Argument.any(), Argument.any())
+        this._requestor.request('GET', 'http://example.org/', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('POST', '/resources', Argument.any(), Argument.any())
+        this._requestor.request('POST', 'http://example.org/resources', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('PATCH', '/res1', Argument.any(), Argument.any())
+        this._requestor.request('PATCH', 'http://example.org/res1', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
 
         this._requestor
-            .request('POST', '/token', {}, {
+            .request('POST', 'http://example.org/token', {}, {
                 grant_type: 'client_credentials',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',

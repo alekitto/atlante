@@ -38,16 +38,11 @@ describe('[Requestor] WebRequestor', function () {
          *
          * @private
          */
-        this._requestor = new WebRequestor('https://localhost/', construct);
+        this._requestor = new WebRequestor(construct);
     });
 
     afterEach(() => {
         this._prophet.checkPredictions();
-    });
-
-    it ('should prepend base path', async () => {
-        this._xmlHttp.open('GET', 'https://localhost/resource/subresource').shouldBeCalled();
-        await this._requestor.request('GET', 'resource/subresource');
     });
 
     it ('should set content-type header if not set', async () => {
@@ -60,18 +55,6 @@ describe('[Requestor] WebRequestor', function () {
         this._xmlHttp.setRequestHeader('Content-Type', 'application/octet-stream').shouldBeCalled();
 
         await this._requestor.request('GET', 'resource/subresource', { 'Content-Type': 'application/octet-stream' });
-    });
-
-    it ('should automatically encodes to JSON a non-string object', async () => {
-        this._xmlHttp.send(JSON.stringify({ foo: 'bar' }))
-            .shouldBeCalled()
-            .will(function () {
-                const o = this.reveal();
-                o.readyState = XMLHttpRequest.DONE;
-                o.onreadystatechange();
-            });
-
-        await this._requestor.request('GET', 'resource/subresource', {}, { foo: 'bar' });
     });
 
     it ('should parse response headers correctly', async () => {
