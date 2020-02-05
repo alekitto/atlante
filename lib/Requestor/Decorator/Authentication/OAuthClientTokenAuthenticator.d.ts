@@ -12,6 +12,7 @@ export interface OAuthClientTokenAuthenticatorConfiguration {
 
 declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
     protected _requestor: RequestorInterface;
+    protected _tokenEndpoint: string;
     protected _tokenStorage: StorageInterface;
     protected _clientId: string;
     protected _clientSecret: string;
