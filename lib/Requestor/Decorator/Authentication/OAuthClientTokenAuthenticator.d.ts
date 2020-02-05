@@ -2,6 +2,7 @@ import { DecoratorInterface } from "../DecoratorInterface";
 import Request from "../../Request";
 import RequestorInterface from "../../RequestorInterface";
 import StorageInterface from "../../../Storage/StorageInterface";
+import Response from "../../Response";
 
 export interface OAuthClientTokenAuthenticatorConfiguration {
     token_endpoint: string;
@@ -39,6 +40,11 @@ declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
      * Request a token.
      */
     protected _getToken(): Promise<string>;
+
+    /**
+     * Encodes data and perform POST request.
+     */
+    protected _request(data: any): Promise<Response>;
 }
 
 export default OAuthClientTokenAuthenticator;
