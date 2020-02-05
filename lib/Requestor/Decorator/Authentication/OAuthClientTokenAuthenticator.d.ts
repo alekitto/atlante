@@ -8,6 +8,7 @@ export interface OAuthClientTokenAuthenticatorConfiguration {
     client_id: string;
     client_secret?: string;
     client_token_key?: string;
+    data_encoding?: 'json' | 'form';
 }
 
 declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
