@@ -85,11 +85,13 @@ describe('[Api] Client', function () {
         this._tokenStorage.save(clientToken).shouldBeCalled();
 
         this._requestor
-            .request('POST', 'http://example.org/token', {}, {
+            .request('POST', 'http://example.org/token', {
+                'Content-Type': 'application/json'
+            }, JSON.stringify({
                 grant_type: 'client_credentials',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
-            })
+            }))
             .shouldBeCalled()
             .willReturn({
                 data: { access_token: 'TEST TOKEN', expires_in: 3600 },
@@ -200,11 +202,13 @@ describe('[Api] Client', function () {
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
 
         this._requestor
-            .request('POST', 'http://example.org/token', {}, {
+            .request('POST', 'http://example.org/token', {
+                'Content-Type': 'application/json'
+            }, JSON.stringify({
                 grant_type: 'client_credentials',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
-            })
+            }))
             .shouldBeCalledTimes(1)
             .will(async () => {
                 await __jymfony.sleep(100);

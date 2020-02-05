@@ -87,12 +87,14 @@ describe('[Api] ContextualClient', function () {
         this._tokenStorage.save(refreshToken).shouldBeCalled();
 
         this._requestor
-            .request('POST', 'http://example.org/token', {}, {
+            .request('POST', 'http://example.org/token', {
+                'Content-Type': 'application/json'
+            }, JSON.stringify({
                 grant_type: 'refresh_token',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
                 refresh_token: 'REFRESH TOKEN',
-            })
+            }))
             .shouldBeCalled()
             .willReturn(tokenResponse)
         ;
@@ -135,13 +137,15 @@ describe('[Api] ContextualClient', function () {
         };
 
         this._requestor
-            .request('POST', 'http://example.org/token', {}, {
+            .request('POST', 'http://example.org/token', {
+                'Content-Type': 'application/json'
+            }, JSON.stringify({
                 grant_type: 'password',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
                 username: 'username',
                 password: 'password',
-            })
+            }))
             .shouldBeCalled()
             .willReturn(tokenResponse)
         ;
@@ -200,12 +204,14 @@ describe('[Api] ContextualClient', function () {
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
 
         this._requestor
-            .request('POST', 'http://example.org/token', {}, {
+            .request('POST', 'http://example.org/token', {
+                'Content-Type': 'application/json'
+            }, JSON.stringify({
                 grant_type: 'refresh_token',
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
                 refresh_token: 'OLD REFRESH TOKEN',
-            })
+            }))
             .shouldBeCalledTimes(1)
             .will(async () => {
                 await __jymfony.sleep(100);
