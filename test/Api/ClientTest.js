@@ -37,7 +37,7 @@ describe('[Api] Client', function () {
     });
 
     afterEach(() => {
-        if (this.currentTest && this.currentTest.state === 'passed') {
+        if (this.currentTest && 'passed' === this.currentTest.state) {
             this._prophet.checkPredictions();
         }
     });
@@ -189,7 +189,7 @@ describe('[Api] Client', function () {
             data: {
                 access_token: 'TEST TOKEN',
                 expires_in: 3600,
-            }, status: 200, statusText: 'OK'
+            }, status: 200, statusText: 'OK',
         };
 
         this._requestor.request('GET', 'http://example.org/', Argument.any(), Argument.any())

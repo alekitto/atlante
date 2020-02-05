@@ -15,7 +15,7 @@ describe('[Requestor] Headers', function () {
         h.add('Content-Type', 'foo/bar');
         h.add('Content-Type', 'bar/baz');
 
-        expect(h.get('Content-Type')).to.be.deep.eq(['foo/bar', 'bar/baz']);
+        expect(h.get('Content-Type')).to.be.deep.eq([ 'foo/bar', 'bar/baz' ]);
     });
 
     it ('header names should be normalized', () => {
@@ -24,7 +24,7 @@ describe('[Requestor] Headers', function () {
         h.add('CONTENT-TYPE', 'bar/baz');
 
         expect(h.has('CoNtEnT-TyPe')).to.be.true;
-        expect(h.get('content-type')).to.be.deep.eq(['foo/bar', 'bar/baz']);
+        expect(h.get('content-type')).to.be.deep.eq([ 'foo/bar', 'bar/baz' ]);
     });
 
     it ('remove should unset all the headers with the given name', () => {
@@ -47,7 +47,7 @@ describe('[Requestor] Headers', function () {
         h.add('Content-Type', 'bar/baz');
         h.add('Content-Type', 'baz/baz');
 
-        expect(h.get('content-type')).to.be.deep.eq(['foo/bar', 'bar/baz', 'baz/baz']);
+        expect(h.get('content-type')).to.be.deep.eq([ 'foo/bar', 'bar/baz', 'baz/baz' ]);
     });
 
     it ('get should return all the header values', () => {

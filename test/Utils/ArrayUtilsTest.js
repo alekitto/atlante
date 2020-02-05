@@ -148,7 +148,7 @@ describe('[Util] ArrayUtils', function () {
             k: 'c',
             f: 'd',
             è: 's',
-            à: 'w'
+            à: 'w',
         };
 
         expect(ArrayUtils.ksort(o)).to.be.deep.eq({
@@ -168,10 +168,10 @@ describe('[Util] ArrayUtils', function () {
     });
 
     it ('computePatchObject should calculate nested objects', () => {
-        const o1 = { foo: ['bar', 'baz'], bar: { baz: 'baz', baz2: 'bazbaz' } };
-        const o2 = { foo: ['baz', 'bar'], bar: { baz: 'baz', baz1: 'baz2' } };
+        const o1 = { foo: [ 'bar', 'baz' ], bar: { baz: 'baz', baz2: 'bazbaz' } };
+        const o2 = { foo: [ 'baz', 'bar' ], bar: { baz: 'baz', baz1: 'baz2' } };
 
-        expect(ArrayUtils.computePatchObject(o1, o2)).to.be.deep.eq({ foo: ['baz', 'bar'], bar: { baz: 'baz', baz1: 'baz2' } });
+        expect(ArrayUtils.computePatchObject(o1, o2)).to.be.deep.eq({ foo: [ 'baz', 'bar' ], bar: { baz: 'baz', baz1: 'baz2' } });
     });
 
     it ('computePatchObject should handle Date object', () => {

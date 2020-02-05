@@ -30,7 +30,9 @@ describe('[Requestor] WebRequestor', function () {
             o.onreadystatechange();
         });
 
-        const construct = function () { return xmlHttp.reveal(); };
+        const construct = function () {
+            return xmlHttp.reveal();
+        };
         construct.DONE = XMLHttpRequest.DONE;
 
         /**

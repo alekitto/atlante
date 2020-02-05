@@ -26,7 +26,7 @@ describe('[Api] ContextualClient', function () {
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
             }
-        )
+        );
     });
 
     afterEach(() => {
@@ -76,8 +76,8 @@ describe('[Api] ContextualClient', function () {
             data: {
                 access_token: 'TEST TOKEN',
                 expires_in: 3600,
-                refresh_token: 'REFRESH AGAIN'
-            }, status: 200, statusText: 'OK'
+                refresh_token: 'REFRESH AGAIN',
+            }, status: 200, statusText: 'OK',
         };
 
         this._tokenStorage.getItem('access_token').willReturn(clientToken);
@@ -130,8 +130,8 @@ describe('[Api] ContextualClient', function () {
             data: {
                 access_token: 'TEST TOKEN',
                 expires_in: 3600,
-                refresh_token: 'REFRESH TOKEN'
-            }, status: 200, statusText: 'OK'
+                refresh_token: 'REFRESH TOKEN',
+            }, status: 200, statusText: 'OK',
         };
 
         this._requestor
@@ -140,7 +140,7 @@ describe('[Api] ContextualClient', function () {
                 client_id: 'foo_id',
                 client_secret: 'foo_secret',
                 username: 'username',
-                password: 'password'
+                password: 'password',
             })
             .shouldBeCalled()
             .willReturn(tokenResponse)
@@ -180,14 +180,16 @@ describe('[Api] ContextualClient', function () {
 
         this._tokenStorage.save(refreshToken)
             .shouldBeCalledTimes(1)
-            .will(async () => { await __jymfony.sleep(20); });
+            .will(async () => {
+                await __jymfony.sleep(20);
+            });
 
         const tokenResponse = {
             data: {
                 access_token: 'TEST TOKEN',
                 expires_in: 3600,
-                refresh_token: 'REFRESH TOKEN'
-            }, status: 200, statusText: 'OK'
+                refresh_token: 'REFRESH TOKEN',
+            }, status: 200, statusText: 'OK',
         };
 
         this._requestor.request('GET', 'http://example.org/', Argument.any(), Argument.any())

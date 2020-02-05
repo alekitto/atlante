@@ -3,7 +3,7 @@ require('@jymfony/autoloader');
 const Debug = Jymfony.Component.Debug.Debug;
 Debug.enable();
 
-if (typeof URL === 'undefined') {
+if ('undefined' === typeof URL) {
     const { URL, URLSearchParams } = require('whatwg-url');
     global.URL = URL;
     global.URLSearchParams = URLSearchParams;

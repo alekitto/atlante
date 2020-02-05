@@ -21,7 +21,9 @@ class XMLHttpRequest {
      */
     abort() {}
     getAllResponseHeaders() {}
-    getResponseHeader(name) { return null; }
+    getResponseHeader(name) {
+        return null;
+    }
     /**
      * Sets the request method, request URL, and synchronous flag.
      * Throws a "SyntaxError" DOMException if either method is not a
@@ -30,7 +32,9 @@ class XMLHttpRequest {
      * case-insensitive match for `CONNECT`, `TRACE`, or `TRACK`.
      * Throws an "InvalidAccessError" DOMException if async is false, current global object is a Window object, and the timeout attribute is not zero or the responseType attribute is not the empty string.
      */
-    open(method, url) { this.readyState = XMLHttpRequest.OPENED; }
+    open(method, url) {
+        this.readyState = XMLHttpRequest.OPENED;
+    }
     /**
      * Initiates the request. The body argument provides the request body, if any,
      * and is ignored if the request method is GET or HEAD.

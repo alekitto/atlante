@@ -26,7 +26,7 @@ describe('[Http] Client', function () {
     });
 
     afterEach(() => {
-        if (this.currentTest && this.currentTest.state === 'passed') {
+        if (this.currentTest && 'passed' === this.currentTest.state) {
             this._prophet.checkPredictions();
         }
     });

@@ -44,5 +44,5 @@ Fazland = {
          * @namespace
          */
         Utils: {},
-    }
+    },
 };
