@@ -14,3 +14,5 @@ declare class HttpBasicAuthenticator {
      */
     decorate(request: Request): Request;
 }
+
+export default HttpBasicAuthenticator;
