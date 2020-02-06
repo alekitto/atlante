@@ -35,7 +35,7 @@ declare class OAuthTokenPasswordAuthenticator extends OAuthClientTokenAuthentica
     /**
      * Stores the access/refresh tokens from response.
      */
-    private _storeTokenFromResponse(response: Response): Promise<void>;
+    protected _storeTokenFromResponse(response: Response): Promise<void>;
 }
 
 export default OAuthTokenPasswordAuthenticator;
