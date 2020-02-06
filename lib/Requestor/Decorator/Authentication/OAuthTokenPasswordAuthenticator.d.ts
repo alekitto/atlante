@@ -33,6 +33,11 @@ declare class OAuthTokenPasswordAuthenticator extends OAuthClientTokenAuthentica
     protected _getToken(): Promise<string>;
 
     /**
+     * Tries to refresh a token. Returns a string if refresh succeeded.
+     */
+    protected _refreshToken(): Promise<string|null>;
+
+    /**
      * Stores the access/refresh tokens from response.
      */
     protected _storeTokenFromResponse(response: Response): Promise<void>;
