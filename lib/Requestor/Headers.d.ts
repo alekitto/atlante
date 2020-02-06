@@ -1,6 +1,8 @@
 import Accept from "./Header/Accept";
 
 declare class Headers {
+    public readonly all: Record<string, string | string[]>;
+
     /**
      * Constructor.
      */

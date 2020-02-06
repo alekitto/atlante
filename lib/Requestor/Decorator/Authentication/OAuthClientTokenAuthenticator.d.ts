@@ -3,6 +3,7 @@ import Request from "../../Request";
 import RequestorInterface from "../../RequestorInterface";
 import StorageInterface from "../../../Storage/StorageInterface";
 import Response from "../../Response";
+import Headers from "../../Headers";
 
 export interface OAuthClientTokenAuthenticatorConfiguration {
     token_endpoint: string;
@@ -10,6 +11,10 @@ export interface OAuthClientTokenAuthenticatorConfiguration {
     client_secret?: string;
     client_token_key?: string;
     data_encoding?: 'json' | 'form';
+}
+
+interface OAuthTokenRequestParams {
+    grant_type: string,
 }
 
 declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
@@ -42,9 +47,14 @@ declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
     protected _getToken(): Promise<string>;
 
     /**
+     * Builds token request body and headers.
+     */
+    protected _buildTokenRequest(params: OAuthTokenRequestParams): { body: any, headers: Headers };
+
+    /**
      * Encodes data and perform POST request.
      */
-    protected _request(data: any): Promise<Response>;
+    protected _request(data: any, headers?: any): Promise<Response>;
 }
 
 export default OAuthClientTokenAuthenticator;
