@@ -1,6 +1,6 @@
 import HttpException from './HttpException';
-import Response from "../Requestor/Response";
-import Request from "../Requestor/Request";
+import Response from "../Requester/Response";
+import Request from "../Requester/Request";
 
 declare class NotFoundHttpException extends HttpException {
     constructor(response?: Response, request?: Request);

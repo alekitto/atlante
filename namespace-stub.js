@@ -23,7 +23,7 @@ Fazland = {
         /**
          * @namespace
          */
-        Requestor: {
+        Requester: {
             /**
              * @namespace
              */

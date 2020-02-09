@@ -1,5 +1,5 @@
 import OAuthClientTokenAuthenticator, { OAuthClientTokenAuthenticatorConfiguration } from './OAuthClientTokenAuthenticator';
-import RequestorInterface from "../../RequestorInterface";
+import RequesterInterface from "../../RequesterInterface";
 import StorageInterface from "../../../Storage/StorageInterface";
 import Response from "../../Response";
 
@@ -15,7 +15,7 @@ declare class OAuthTokenPasswordAuthenticator extends OAuthClientTokenAuthentica
     /**
      * Constructor.
      */
-    constructor(requestor: RequestorInterface, tokenStorage: StorageInterface, config: OAuthTokenPasswordAuthenticatorConfiguration);
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OAuthTokenPasswordAuthenticatorConfiguration);
 
     /**
      * Authenticates user.

@@ -1,11 +1,11 @@
-const WebRequestor = Fazland.Atlante.Requestor.WebRequestor;
+const WebRequester = Fazland.Atlante.Requester.WebRequester;
 const Argument = Jymfony.Component.Testing.Argument.Argument;
 const Prophet = Jymfony.Component.Testing.Prophet;
 const XMLHttpRequest = Fazland.Atlante.Stubs.XmlHttpRequest;
 
 const { expect } = require('chai');
 
-describe('[Requestor] WebRequestor', function () {
+describe('[Requester] WebRequester', function () {
     beforeEach(() => {
         /**
          * @type {Jymfony.Component.Testing.Prophet}
@@ -36,11 +36,11 @@ describe('[Requestor] WebRequestor', function () {
         construct.DONE = XMLHttpRequest.DONE;
 
         /**
-         * @type {Fazland.Atlante.Requestor.WebRequestor}
+         * @type {Fazland.Atlante.Requester.WebRequester}
          *
          * @private
          */
-        this._requestor = new WebRequestor(construct);
+        this._requester = new WebRequester(construct);
     });
 
     afterEach(() => {
@@ -49,21 +49,21 @@ describe('[Requestor] WebRequestor', function () {
 
     it ('should set content-type header if not set', async () => {
         this._xmlHttp.setRequestHeader('Content-Type', 'application/json').shouldBeCalled();
-        await this._requestor.request('GET', 'resource/subresource');
+        await this._requester.request('GET', 'resource/subresource');
     });
 
     it ('should not set content-type header if set', async () => {
         this._xmlHttp.setRequestHeader('Content-Type', 'application/json').shouldNotBeCalled();
         this._xmlHttp.setRequestHeader('Content-Type', 'application/octet-stream').shouldBeCalled();
 
-        await this._requestor.request('GET', 'resource/subresource', { 'Content-Type': 'application/octet-stream' });
+        await this._requester.request('GET', 'resource/subresource', { 'Content-Type': 'application/octet-stream' });
     });
 
     it ('should parse response headers correctly', async () => {
         this._xmlHttp.getAllResponseHeaders(Argument.cetera())
             .willReturn('Content-Type: application/octet-stream\r\nDate: 12 Jan 2019 02:00:00 GMT\r\n');
 
-        const response = await this._requestor.request('GET', 'resource/subresource');
+        const response = await this._requester.request('GET', 'resource/subresource');
         expect(response.headers.get('Content-Type')).to.be.eq('application/octet-stream');
         expect(response.headers.get('Date')).to.be.eq('12 Jan 2019 02:00:00 GMT');
     });
@@ -77,7 +77,7 @@ describe('[Requestor] WebRequestor', function () {
             o.onreadystatechange();
         });
 
-        const response = await this._requestor.request('GET', 'resource/subresource');
+        const response = await this._requester.request('GET', 'resource/subresource');
         expect(response.status).to.be.eq(418);
         expect(response.statusText).to.be.eq('I\'m a teapot');
     });

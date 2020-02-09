@@ -1,6 +1,6 @@
 import { DecoratorInterface } from "../DecoratorInterface";
 import Request from "../../Request";
-import RequestorInterface from "../../RequestorInterface";
+import RequesterInterface from "../../RequesterInterface";
 import StorageInterface from "../../../Storage/StorageInterface";
 import Response from "../../Response";
 import Headers from "../../Headers";
@@ -18,7 +18,7 @@ interface OAuthTokenRequestParams {
 }
 
 declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
-    protected _requestor: RequestorInterface;
+    protected _requester: RequesterInterface;
     protected _tokenEndpoint: string;
     protected _tokenStorage: StorageInterface;
     protected _clientId: string;
@@ -29,7 +29,7 @@ declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
     /**
      * Constructor.
      */
-    constructor(requestor: RequestorInterface, tokenStorage: StorageInterface, config: OAuthClientTokenAuthenticatorConfiguration);
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OAuthClientTokenAuthenticatorConfiguration);
 
     /**
      * Decorates the request adding client token authorization if not already set.

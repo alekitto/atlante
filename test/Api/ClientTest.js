@@ -1,5 +1,5 @@
 const Client = Fazland.Atlante.Api.Client;
-const RequestorInterface = Fazland.Atlante.Requestor.RequestorInterface;
+const RequesterInterface = Fazland.Atlante.Requester.RequesterInterface;
 const ItemInterface = Fazland.Atlante.Storage.ItemInterface;
 const StorageInterface = Fazland.Atlante.Storage.StorageInterface;
 
@@ -20,9 +20,9 @@ describe('[Api] Client', function () {
          */
         this._prophet = new Prophet();
 
-        this._requestor = this._prophet.prophesize(RequestorInterface);
+        this._requester = this._prophet.prophesize(RequesterInterface);
         this._tokenStorage = this._prophet.prophesize(StorageInterface);
-        this._client = new Client(this._requestor.reveal(), this._tokenStorage.reveal(), {
+        this._client = new Client(this._requester.reveal(), this._tokenStorage.reveal(), {
             base_url: 'http://example.org',
             client_id: 'foo_id',
             client_secret: 'foo_secret',
@@ -54,9 +54,9 @@ describe('[Api] Client', function () {
             .willReturn(clientToken)
         ;
 
-        this._requestor.request(Argument.cetera()).will((...args) => dd(args));
+        this._requester.request(Argument.cetera()).will((...args) => dd(args));
 
-        this._requestor
+        this._requester
             .request('GET', 'http://example.org/', {
                 Authorization: 'Bearer TEST TOKEN',
                 Accept: 'application/json; version=20181015',
@@ -84,7 +84,7 @@ describe('[Api] Client', function () {
         ;
         this._tokenStorage.save(clientToken).shouldBeCalled();
 
-        this._requestor
+        this._requester
             .request('POST', 'http://example.org/token', {
                 'Content-Type': 'application/json'
             }, JSON.stringify({
@@ -99,7 +99,7 @@ describe('[Api] Client', function () {
             })
         ;
 
-        this._requestor.request('GET', 'http://example.org/', Argument.cetera())
+        this._requester.request('GET', 'http://example.org/', Argument.cetera())
             .willReturn(response)
         ;
 
@@ -114,7 +114,7 @@ describe('[Api] Client', function () {
         const response = { data: {}, status: 404, statusText: 'Not Found' };
 
         this._tokenStorage.getItem('fazland_atlante_client_token').willReturn(clientToken);
-        this._requestor.request('GET', 'http://example.org/', Argument.cetera()).willReturn(response);
+        this._requester.request('GET', 'http://example.org/', Argument.cetera()).willReturn(response);
 
         let caughtErr;
         try {
@@ -135,7 +135,7 @@ describe('[Api] Client', function () {
         const response = { data: {}, status: 500, statusText: 'Internal Server Error' };
 
         this._tokenStorage.getItem('fazland_atlante_client_token').willReturn(clientToken);
-        this._requestor.request('GET', 'http://example.org/', Argument.cetera()).willReturn(response);
+        this._requester.request('GET', 'http://example.org/', Argument.cetera()).willReturn(response);
 
         let caughtErr;
         try {
@@ -156,7 +156,7 @@ describe('[Api] Client', function () {
         const response = { data: {}, status: 404, statusText: 'Not Found' };
 
         this._tokenStorage.getItem('fazland_atlante_client_token').willReturn(clientToken);
-        this._requestor.request('POST', 'http://example.org/token', Argument.cetera()).willReturn(response);
+        this._requester.request('POST', 'http://example.org/token', Argument.cetera()).willReturn(response);
 
         let caughtErr;
         try {
@@ -194,14 +194,14 @@ describe('[Api] Client', function () {
             }, status: 200, statusText: 'OK',
         };
 
-        this._requestor.request('GET', 'http://example.org/', Argument.any(), Argument.any())
+        this._requester.request('GET', 'http://example.org/', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('POST', 'http://example.org/resources', Argument.any(), Argument.any())
+        this._requester.request('POST', 'http://example.org/resources', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('PATCH', 'http://example.org/res1', Argument.any(), Argument.any())
+        this._requester.request('PATCH', 'http://example.org/res1', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
 
-        this._requestor
+        this._requester
             .request('POST', 'http://example.org/token', {
                 'Content-Type': 'application/json'
             }, JSON.stringify({

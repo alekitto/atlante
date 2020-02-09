@@ -1,5 +1,5 @@
 const Client = Fazland.Atlante.Api.Client;
-const RequestorInterface = Fazland.Atlante.Requestor.RequestorInterface;
+const RequesterInterface = Fazland.Atlante.Requester.RequesterInterface;
 const StorageInterface = Fazland.Atlante.Storage.StorageInterface;
 const ItemInterface = Fazland.Atlante.Storage.ItemInterface;
 
@@ -16,10 +16,10 @@ describe('[Api] ContextualClient', function () {
          */
         this._prophet = new Prophet();
 
-        this._requestor = this._prophet.prophesize(RequestorInterface);
+        this._requester = this._prophet.prophesize(RequesterInterface);
         this._tokenStorage = this._prophet.prophesize(StorageInterface);
         this._client = new Client(
-            this._requestor.reveal(),
+            this._requester.reveal(),
             this._tokenStorage.reveal(),
             {
                 base_url: 'http://example.org',
@@ -45,7 +45,7 @@ describe('[Api] ContextualClient', function () {
             .willReturn(clientToken)
         ;
 
-        this._requestor
+        this._requester
             .request('GET', 'http://example.org/', {
                 Authorization: 'Bearer TEST TOKEN',
                 Accept: 'application/json',
@@ -86,7 +86,7 @@ describe('[Api] ContextualClient', function () {
         this._tokenStorage.save(clientToken).shouldBeCalled();
         this._tokenStorage.save(refreshToken).shouldBeCalled();
 
-        this._requestor
+        this._requester
             .request('POST', 'http://example.org/token', {
                 'Content-Type': 'application/json'
             }, JSON.stringify({
@@ -99,7 +99,7 @@ describe('[Api] ContextualClient', function () {
             .willReturn(tokenResponse)
         ;
 
-        this._requestor
+        this._requester
             .request('GET', 'http://example.org/', {
                 Authorization: 'Bearer TEST TOKEN',
                 Accept: 'application/json',
@@ -136,7 +136,7 @@ describe('[Api] ContextualClient', function () {
             }, status: 200, statusText: 'OK',
         };
 
-        this._requestor
+        this._requester
             .request('POST', 'http://example.org/token', {
                 'Content-Type': 'application/json'
             }, JSON.stringify({
@@ -196,14 +196,14 @@ describe('[Api] ContextualClient', function () {
             }, status: 200, statusText: 'OK',
         };
 
-        this._requestor.request('GET', 'http://example.org/', Argument.any(), Argument.any())
+        this._requester.request('GET', 'http://example.org/', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('POST', 'http://example.org/resources', Argument.any(), Argument.any())
+        this._requester.request('POST', 'http://example.org/resources', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
-        this._requestor.request('PATCH', 'http://example.org/res1', Argument.any(), Argument.any())
+        this._requester.request('PATCH', 'http://example.org/res1', Argument.any(), Argument.any())
             .willReturn({ data: {}, status: 200, statusText: 'OK' }).shouldBeCalledTimes(1);
 
-        this._requestor
+        this._requester
             .request('POST', 'http://example.org/token', {
                 'Content-Type': 'application/json'
             }, JSON.stringify({

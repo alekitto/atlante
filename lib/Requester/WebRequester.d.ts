@@ -1,10 +1,10 @@
-import RequestorInterface from './RequestorInterface';
+import RequesterInterface from './RequesterInterface';
 import Response from './Response'
 
 /**
- * Requestor that can be used in a browser context.
+ * Requester that can be used in a browser context.
  */
-declare class WebRequestor implements RequestorInterface {
+declare class WebRequester implements RequesterInterface {
     /**
      * Constructor.
      */
@@ -16,4 +16,4 @@ declare class WebRequestor implements RequestorInterface {
     request<T = any>(method: string, path: string, headers?: any, requestData?: any): Promise<Response<T>>;
 }
 
-export default WebRequestor;
+export default WebRequester;

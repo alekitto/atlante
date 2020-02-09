@@ -1,7 +1,7 @@
-const Headers = Fazland.Atlante.Requestor.Headers;
+const Headers = Fazland.Atlante.Requester.Headers;
 const { expect } = require('chai');
 
-describe('[Requestor] Headers', function () {
+describe('[Requester] Headers', function () {
     it ('set should overwrite existing header', () => {
         const h = new Headers();
         h.add('Content-Type', 'foo/bar');

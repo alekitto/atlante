@@ -1,5 +1,5 @@
-import Request from "../Requestor/Request";
-import Response from "../Requestor/Response";
+import Request from "../Requester/Request";
+import Response from "../Requester/Response";
 
 declare class HttpException extends Error {
     /**

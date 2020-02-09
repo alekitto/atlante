@@ -1,6 +1,6 @@
 import Response from './Response';
 
-declare interface RequestorInterface {
+declare interface RequesterInterface {
     /**
      * Performs a request.
      * Returns a response with parsed data, if no error is present.
@@ -8,4 +8,4 @@ declare interface RequestorInterface {
     request<T = any>(method: string, path: string, headers?: any, requestData?: any): Promise<Response<T>>;
 }
 
-export default RequestorInterface;
+export default RequesterInterface;

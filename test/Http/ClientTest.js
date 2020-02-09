@@ -1,13 +1,6 @@
 const Client = Fazland.Atlante.Http.Client;
-const RequestorInterface = Fazland.Atlante.Requestor.RequestorInterface;
-const DecoratorInterface = Fazland.Atlante.Requestor.Decorator.DecoratorInterface;
-const ItemInterface = Fazland.Atlante.Storage.ItemInterface;
-const StorageInterface = Fazland.Atlante.Storage.StorageInterface;
-
-const HttpException = Fazland.Atlante.Exception.HttpException;
-const NoTokenAvailableException = Fazland.Atlante.Exception.NoTokenAvailableException;
-const NotFoundHttpException = Fazland.Atlante.Exception.NotFoundHttpException;
-
+const RequesterInterface = Fazland.Atlante.Requester.RequesterInterface;
+const DecoratorInterface = Fazland.Atlante.Requester.Decorator.DecoratorInterface;
 const Argument = Jymfony.Component.Testing.Argument.Argument;
 const Prophet = Jymfony.Component.Testing.Prophet;
 const { expect } = require('chai');
@@ -21,8 +14,8 @@ describe('[Http] Client', function () {
          */
         this._prophet = new Prophet();
 
-        this._requestor = this._prophet.prophesize(RequestorInterface);
-        this._client = new Client(this._requestor.reveal(), []);
+        this._requester = this._prophet.prophesize(RequesterInterface);
+        this._client = new Client(this._requester.reveal(), []);
     });
 
     afterEach(() => {
@@ -31,10 +24,10 @@ describe('[Http] Client', function () {
         }
     });
 
-    it('should forward request to requestor', async () => {
+    it('should forward request to requester', async () => {
         const response = { data: {}, status: 200, statusText: 'OK' };
 
-        this._requestor
+        this._requester
             .request('GET', 'http://example.org/', { Accept: 'application/json' }, undefined)
             .shouldBeCalled()
             .willReturn(response)
@@ -58,7 +51,7 @@ describe('[Http] Client', function () {
         ;
 
         this._client._decorators.push(decorator.reveal());
-        this._requestor
+        this._requester
             .request('GET', 'http://example.org/', { Accept: 'application/json' }, undefined)
             .shouldBeCalled()
             .willReturn(response)

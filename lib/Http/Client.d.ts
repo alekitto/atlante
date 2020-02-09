@@ -1,14 +1,13 @@
 import ClientInterface from './ClientInterface';
-import Request from "../Requestor/Request";
-import Response from '../Requestor/Response';
-import RequestorInterface from '../Requestor/RequestorInterface';
-import { DecoratorInterface } from "../Requestor/Decorator/DecoratorInterface";
-
+import Request from "../Requester/Request";
+import Response from '../Requester/Response';
+import RequesterInterface from '../Requester/RequesterInterface';
+import { DecoratorInterface } from "../Requester/Decorator/DecoratorInterface";
 
 declare class Client implements ClientInterface {
     protected _decorators: DecoratorInterface[];
 
-    constructor(requestor: RequestorInterface, requestDecorators?: DecoratorInterface[]);
+    constructor(requester: RequesterInterface, requestDecorators?: DecoratorInterface[]);
 
     /**
      * @inheritdoc

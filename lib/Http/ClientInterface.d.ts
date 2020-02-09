@@ -1,4 +1,4 @@
-import Response from '../Requestor/Response';
+import Response from '../Requester/Response';
 
 declare interface ClientInterface {
     /**
