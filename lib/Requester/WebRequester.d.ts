@@ -8,7 +8,7 @@ declare class WebRequester implements RequesterInterface {
     /**
      * Constructor.
      */
-    constructor(baseUrl: string);
+    constructor(xmlHttp?: typeof XMLHttpRequest);
 
     /**
      * @inheritdoc
