@@ -13,7 +13,7 @@ export interface OAuthClientTokenAuthenticatorConfiguration {
     data_encoding?: 'json' | 'form';
 }
 
-interface OAuthTokenRequestParams {
+interface OAuthTokenRequestParams extends Record<string, any> {
     grant_type: string,
 }
 
