@@ -27,7 +27,17 @@ Fazland = {
             /**
              * @namespace
              */
-            Decorator: {},
+            Decorator: {
+                /**
+                 * @namespace
+                 */
+                Authentication: {
+                    /**
+                     * @namespace
+                     */
+                    OAuth: {},
+                },
+            },
 
             /**
              * @namespace

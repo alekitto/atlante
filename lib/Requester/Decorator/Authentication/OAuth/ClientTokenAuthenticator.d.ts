@@ -1,11 +1,11 @@
-import { DecoratorInterface } from "../DecoratorInterface";
-import Request from "../../Request";
-import RequesterInterface from "../../RequesterInterface";
-import StorageInterface from "../../../Storage/StorageInterface";
-import Response from "../../Response";
-import Headers from "../../Headers";
+import { DecoratorInterface } from "../../DecoratorInterface";
+import Request from "../../../Request";
+import RequesterInterface from "../../../RequesterInterface";
+import StorageInterface from "../../../../Storage/StorageInterface";
+import Response from "../../../Response";
+import Headers from "../../../Headers";
 
-export interface OAuthClientTokenAuthenticatorConfiguration {
+export interface ClientTokenAuthenticatorConfiguration {
     token_endpoint: string;
     client_id: string;
     client_secret?: string;
@@ -13,11 +13,11 @@ export interface OAuthClientTokenAuthenticatorConfiguration {
     data_encoding?: 'json' | 'form';
 }
 
-interface OAuthTokenRequestParams extends Record<string, any> {
+interface TokenRequestParams extends Record<string, any> {
     grant_type: string,
 }
 
-declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
+declare class ClientTokenAuthenticator implements DecoratorInterface {
     protected _requester: RequesterInterface;
     protected _tokenEndpoint: string;
     protected _tokenStorage: StorageInterface;
@@ -29,7 +29,7 @@ declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
     /**
      * Constructor.
      */
-    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OAuthClientTokenAuthenticatorConfiguration);
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: ClientTokenAuthenticatorConfiguration);
 
     /**
      * Decorates the request adding client token authorization if not already set.
@@ -49,7 +49,7 @@ declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
     /**
      * Builds token request body and headers.
      */
-    protected _buildTokenRequest(params: OAuthTokenRequestParams): { body: any, headers: Headers };
+    protected _buildTokenRequest(params: TokenRequestParams): { body: any, headers: Headers };
 
     /**
      * Encodes data and perform POST request.
@@ -57,4 +57,4 @@ declare class OAuthClientTokenAuthenticator implements DecoratorInterface {
     protected _request(data: any, headers?: any): Promise<Response>;
 }
 
-export default OAuthClientTokenAuthenticator;
+export default ClientTokenAuthenticator;

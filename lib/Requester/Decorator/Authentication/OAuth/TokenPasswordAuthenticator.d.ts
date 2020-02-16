@@ -1,21 +1,21 @@
-import OAuthClientTokenAuthenticator, { OAuthClientTokenAuthenticatorConfiguration } from './OAuthClientTokenAuthenticator';
-import RequesterInterface from "../../RequesterInterface";
-import StorageInterface from "../../../Storage/StorageInterface";
-import Response from "../../Response";
+import ClientTokenAuthenticator, { ClientTokenAuthenticatorConfiguration } from './ClientTokenAuthenticator';
+import RequesterInterface from "../../../RequesterInterface";
+import StorageInterface from "../../../../Storage/StorageInterface";
+import Response from "../../../Response";
 
-declare interface OAuthTokenPasswordAuthenticatorConfiguration extends OAuthClientTokenAuthenticatorConfiguration {
+declare interface TokenPasswordAuthenticatorConfiguration extends ClientTokenAuthenticatorConfiguration {
     access_token_key?: string;
     refresh_token_key?: string;
 }
 
-declare class OAuthTokenPasswordAuthenticator extends OAuthClientTokenAuthenticator {
+declare class TokenPasswordAuthenticator extends ClientTokenAuthenticator {
     private _accessTokenKey: string;
     private _refreshTokenKey: string;
 
     /**
      * Constructor.
      */
-    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OAuthTokenPasswordAuthenticatorConfiguration);
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: TokenPasswordAuthenticatorConfiguration);
 
     /**
      * Authenticates user.
@@ -43,4 +43,4 @@ declare class OAuthTokenPasswordAuthenticator extends OAuthClientTokenAuthentica
     protected _storeTokenFromResponse(response: Response): Promise<void>;
 }
 
-export default OAuthTokenPasswordAuthenticator;
+export default TokenPasswordAuthenticator;
