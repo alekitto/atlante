@@ -36,6 +36,11 @@ Fazland = {
                      * @namespace
                      */
                     OAuth: {},
+
+                    /**
+                     * @namespace
+                     */
+                    OpenID: {},
                 },
             },
 

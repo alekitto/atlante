@@ -13,7 +13,7 @@ export interface ClientTokenAuthenticatorConfiguration {
     data_encoding?: 'json' | 'form';
 }
 
-interface TokenRequestParams extends Record<string, any> {
+export interface TokenRequestParams extends Record<string, any> {
     grant_type: string,
 }
 
