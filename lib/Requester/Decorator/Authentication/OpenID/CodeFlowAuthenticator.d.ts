@@ -1,6 +1,10 @@
-import BaseAuthenticator, { AuthFlowDisplay } from "./BaseAuthenticator";
+import BaseAuthenticator, { AuthFlowDisplay, OpenidAuthenticatorConfiguration } from "./BaseAuthenticator";
+import RequesterInterface from "../../../RequesterInterface";
+import StorageInterface from "../../../../Storage/StorageInterface";
 
 declare class CodeFlowAuthenticator extends BaseAuthenticator {
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OpenidAuthenticatorConfiguration);
+
     /**
      * @inheritdoc
      */
