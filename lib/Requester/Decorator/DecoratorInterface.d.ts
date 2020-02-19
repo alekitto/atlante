@@ -1,6 +1,6 @@
 import Request from '../Request';
 
-declare interface DecoratorInterface {
+export declare interface DecoratorInterface {
     /**
      * Decorates the request object adding/removing headers,
      * authenticating the request, etc.
