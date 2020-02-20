@@ -49,7 +49,7 @@ declare abstract class BaseAuthenticator extends TokenPasswordAuthenticator {
     /**
      * @inheritdoc
      */
-    logout(): Promise<void>;
+    logout(state?: string): Promise<void>;
 
     /**
      * @inheritdoc
