@@ -35,11 +35,6 @@ declare class Client implements ClientInterface {
     patch<T = any>(path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
 
     /**
-     * @inheritdoc
-     */
-    mergePatch<T = any>(path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
-
-    /**
      * Filters a response, eventually throwing an error in case response status is not successful.
      */
     protected _filterResponse(request: Request, response: Response): void;
