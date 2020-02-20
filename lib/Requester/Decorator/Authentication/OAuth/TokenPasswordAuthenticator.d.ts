@@ -6,9 +6,11 @@ import Response from "../../../Response";
 declare interface TokenPasswordAuthenticatorConfiguration extends ClientTokenAuthenticatorConfiguration {
     access_token_key?: string;
     refresh_token_key?: string;
+    id_token_key?: string;
 }
 
 declare class TokenPasswordAuthenticator extends ClientTokenAuthenticator {
+    protected _idTokenKey: string;
     private _accessTokenKey: string;
     private _refreshTokenKey: string;
 
