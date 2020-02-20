@@ -12,6 +12,7 @@ export interface OpenidAuthenticatorConfiguration {
     client_secret?: string;
     audience?: string;
     auth_method?: 'client_secret_basic' | 'client_secret_post';
+    post_logout_redirect_uri?: string;
 }
 
 export enum AuthFlowDisplay {
