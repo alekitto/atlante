@@ -2,6 +2,7 @@ import BaseClient from '../Http/Client';
 import ClientInterface from './ClientInterface';
 import RequesterInterface from '../Requester/RequesterInterface';
 import StorageInterface from '../Storage/StorageInterface';
+import Response from "../Requester/Response";
 
 declare interface ClientConfig {
     client_id: string;
@@ -15,6 +16,11 @@ declare interface ClientConfig {
  */
 declare class Client extends BaseClient implements ClientInterface {
     constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: ClientConfig);
+
+    /**
+     * @inheritdoc
+     */
+    mergePatch<T = any>(path: string, requestData?: any, headers?: {}): Promise<Response<T>>;
 
     /**
      * Authenticates user.
