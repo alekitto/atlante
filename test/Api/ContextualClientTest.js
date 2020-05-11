@@ -1,13 +1,30 @@
+const Argument = Jymfony.Component.Testing.Argument.Argument;
 const Client = Fazland.Atlante.Api.Client;
+const ErrorHandler = Jymfony.Component.Debug.ErrorHandler;
+const ItemInterface = Fazland.Atlante.Storage.ItemInterface;
+const NullLogger = Jymfony.Component.Logger.NullLogger;
+const Prophet = Jymfony.Component.Testing.Prophet;
 const RequesterInterface = Fazland.Atlante.Requester.RequesterInterface;
 const StorageInterface = Fazland.Atlante.Storage.StorageInterface;
-const ItemInterface = Fazland.Atlante.Storage.ItemInterface;
-
-const Prophet = Jymfony.Component.Testing.Prophet;
-const Argument = Jymfony.Component.Testing.Argument.Argument;
 const { expect } = require('chai');
 
 describe('[Api] ContextualClient', function () {
+    let handler, prevLogger;
+    before(() => {
+        const warningListeners = process.listeners('warning');
+        for (const listener of warningListeners) {
+            if (!! listener.innerObject && (handler = listener.innerObject.getObject()) instanceof ErrorHandler) {
+                prevLogger = handler.setDefaultLogger(new NullLogger());
+            }
+        }
+    });
+
+    after(() => {
+        if (prevLogger) {
+            handler.setDefaultLogger(prevLogger);
+        }
+    });
+
     beforeEach(() => {
         /**
          * @type {Jymfony.Component.Testing.Prophet}

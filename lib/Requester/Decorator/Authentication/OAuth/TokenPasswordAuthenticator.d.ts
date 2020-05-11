@@ -10,8 +10,8 @@ declare interface TokenPasswordAuthenticatorConfiguration extends ClientTokenAut
 }
 
 declare class TokenPasswordAuthenticator extends ClientTokenAuthenticator {
+    protected _accessTokenKey: string;
     protected _idTokenKey: string;
-    private _accessTokenKey: string;
     private _refreshTokenKey: string;
 
     /**

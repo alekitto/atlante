@@ -9,9 +9,11 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "node ./tests.js \"test/**/*.js\" && eslint lib/",
     "coverage": "nyc npm test",
-    "coverage-html": "nyc --reporter=html npm test"
+    "coverage-html": "nyc --reporter=html npm test",
+    "lint": "eslint lib/",
+    "test": "npm run unit-test && npm run lint",
+    "unit-test": "node ./tests.js \"test/**/*.js\""
   },
   "author": "devs@fazland.com",
   "dependencies": {
