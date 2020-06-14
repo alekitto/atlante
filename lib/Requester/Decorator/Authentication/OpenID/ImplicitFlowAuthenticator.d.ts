@@ -2,10 +2,14 @@ import BaseAuthenticator, { AuthFlowDisplay, OpenidAuthenticatorConfiguration } 
 import RequesterInterface from "../../../RequesterInterface";
 import StorageInterface from "../../../../Storage/StorageInterface";
 
-declare class ImplicitFlowAuthenticator extends BaseAuthenticator {
-    private readonly _lastCallbackUri: null | string;
+interface ImplicitFlowAuthenticatorConfiguration extends OpenidAuthenticatorConfiguration {
+    refresh_redirect_uri: string;
+}
 
-    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: OpenidAuthenticatorConfiguration);
+declare class ImplicitFlowAuthenticator extends BaseAuthenticator {
+    private readonly _refreshRedirectUri: null | string;
+
+    constructor(requester: RequesterInterface, tokenStorage: StorageInterface, config: ImplicitFlowAuthenticatorConfiguration);
 
     /**
      * @inheritdoc
@@ -24,3 +28,5 @@ declare class ImplicitFlowAuthenticator extends BaseAuthenticator {
      */
     protected _refreshToken(): Promise<string|null>;
 }
+
+export default ImplicitFlowAuthenticator;
